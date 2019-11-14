@@ -1,15 +1,23 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { fetchData } from "./api";
+import { PAIRS, Markets } from "./api/kraken";
 
 import "./css/tailwind.css";
 
-const init = async () => {
-  const data = await fetchData();
-  console.log(data);
-};
-
 const App = () => {
-  init();
+  const [data, setData] = useState<Markets | undefined>(undefined);
+
+  useEffect(() => {
+    (async () => {
+      const data = await fetchData(PAIRS.ETHUSD);
+      setData(data);
+    })();
+  }, []);
+
+  if (data === undefined) {
+    return <p>Loading data...</p>;
+  }
+
   return (
     <div className="flex mb-4">
       <div className="w-1/3 bg-gray-400 h-12">column 1</div>
