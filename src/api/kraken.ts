@@ -7,6 +7,7 @@ export const PAIRS = {
   XBTUSD: "XBTUSD"
 };
 
+type askBid = [string, string, number];
 interface AsksBids {
   asks: (string | number)[][];
   bids: (string | number)[][];
@@ -21,12 +22,19 @@ interface KrakenResult {
   result: Markets;
 }
 
+const sortFn: (
+  [a0, a1, a2]: (string | number)[],
+  [b0, b1, b2]: (string | number)[]
+) => number = ([a0, a1, a2], [b0, b1, b2]) => {
+  return parseInt(a0 as string, 10) - parseInt(b0 as string, 10);
+};
+
 // hmmm, is there a better way to do this with generics??
 const sortByPrice = (orderBook: Markets) => {
   const key = Object.keys(orderBook)[0];
   return {
     [key]: {
-      asks: orderBook[key].asks,
+      asks: orderBook[key].asks.sort(sortFn),
       bids: orderBook.XETHZUSD.bids
     }
   };
