@@ -12,30 +12,17 @@
       }
     },
     {
+      "name": "Debug CRA Tests",
       "type": "node",
       "request": "launch",
-      "name": "Jest All",
-      "program": "${workspaceFolder}/node_modules/.bin/jest",
-      "args": ["--runInBand"],
+      "runtimeExecutable": "${workspaceRoot}/node_modules/.bin/react-scripts",
+      "args": ["test", "--runInBand", "--no-cache", "--watchAll=false"],
+      "cwd": "${workspaceRoot}",
+      "protocol": "inspector",
       "console": "integratedTerminal",
       "internalConsoleOptions": "neverOpen",
-      "disableOptimisticBPs": true,
-      "windows": {
-        "program": "${workspaceFolder}/node_modules/jest/bin/jest"
-      }
-    },
-    {
-      "type": "node",
-      "request": "launch",
-      "name": "Jest Current File",
-      "program": "${workspaceFolder}/node_modules/.bin/jest",
-      "args": ["${fileBasenameNoExtension}", "--config", "jest.config.js"],
-      "console": "integratedTerminal",
-      "internalConsoleOptions": "neverOpen",
-      "disableOptimisticBPs": true,
-      "windows": {
-        "program": "${workspaceFolder}/node_modules/jest/bin/jest"
-      }
+      "env": { "CI": "true" },
+      "disableOptimisticBPs": true
     }
   ]
 }

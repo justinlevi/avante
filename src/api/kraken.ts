@@ -12,9 +12,9 @@ type ResultType = {
   };
 };
 
-export const fetchData = async () => {
-  return process.env.NODE_ENV === "development"
-    ? (data as ResultType)
+export const fetchData = async (env: string = process.env.NODE_ENV) => {
+  return env === "development"
+    ? (data as ResultType | { static: boolean })
     : (axios.get("/0/public/Depth?pair=ETHUSD", {
         headers: { "content-type": "application/json" }
       }) as Promise<ResultType>);
