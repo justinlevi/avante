@@ -20,8 +20,7 @@ export const DataGrid = ({ market, bidsOrAsks }: PropsType) => {
       <thead>
         {bidsOrAsks === BidsOrAsks.BIDS ? (
           <tr>
-            <th className="w-1/4 px-4 py-2 text-left">Count</th>
-            <th className="w-1/4 px-4 py-2 text-left">Amount</th>
+            <th className="w-1/4 px-4 py-2 text-left">Volume</th>
             <th className="w-1/4 px-4 py-2 text-left">Total</th>
             <th className="w-1/4 px-4 py-2 text-left">Price</th>
           </tr>
@@ -29,8 +28,7 @@ export const DataGrid = ({ market, bidsOrAsks }: PropsType) => {
           <tr>
             <th className="w-1/4 px-4 py-2 text-left">Price</th>
             <th className="w-1/4 px-4 py-2 text-left">Total</th>
-            <th className="w-1/4 px-4 py-2 text-left">Amount</th>
-            <th className="w-1/4 px-4 py-2 text-left">Count</th>
+            <th className="w-1/4 px-4 py-2 text-left">Volume</th>
           </tr>
         )}
       </thead>
