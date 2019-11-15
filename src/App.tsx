@@ -1,16 +1,20 @@
 import React, { useState, useEffect } from "react";
 import { fetchData } from "./api";
-import { PAIRS, Markets } from "./api/kraken";
+import { PAIRS, Market } from "./api/kraken";
 
 import "./css/tailwind.css";
 
 const App = () => {
-  const [data, setData] = useState<Markets | undefined>(undefined);
+  const [data, setData] = useState<Market | undefined>(undefined);
 
   useEffect(() => {
     (async () => {
-      const data = await fetchData(PAIRS.ETHUSD);
-      setData(data);
+      try {
+        const data = await fetchData(PAIRS.ETHUSD, "development");
+        setData(data);
+      } catch (error) {
+        console.log(error);
+      }
     })();
   }, []);
 

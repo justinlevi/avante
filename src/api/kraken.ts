@@ -7,30 +7,30 @@ export const PAIRS = {
   XBTUSD: "XBTUSD"
 };
 
-type askBid = [string, string, number];
 interface AsksBids {
   asks: (string | number)[][];
   bids: (string | number)[][];
 }
 
-export type Markets = {
+export type Market = {
   [x: string]: AsksBids;
 };
 
 interface KrakenResult {
   error: any[];
-  result: Markets;
+  result: Market;
 }
 
-const sortFn: (
+type sortFnType = (
   [a0, a1, a2]: (string | number)[],
   [b0, b1, b2]: (string | number)[]
-) => number = ([a0, a1, a2], [b0, b1, b2]) => {
-  return parseInt(a0 as string, 10) - parseInt(b0 as string, 10);
-};
+) => number;
+
+const sortFn: sortFnType = ([a0], [b0]) =>
+  parseInt(a0 as string, 10) - parseInt(b0 as string, 10);
 
 // hmmm, is there a better way to do this with generics??
-const sortByPrice = (orderBook: Markets) => {
+const sortByPrice = (orderBook: Market) => {
   const key = Object.keys(orderBook)[0];
   return {
     [key]: {
@@ -40,7 +40,7 @@ const sortByPrice = (orderBook: Markets) => {
   };
 };
 
-const localFetch: () => Promise<Markets> = () => {
+const localFetch: () => Promise<Market> = () => {
   return new Promise(resolve => {
     setTimeout(() => {
       resolve(sortByPrice(data.result));
@@ -58,6 +58,7 @@ const remoteFetch = async (market: string) => {
 export const fetchData = async (
   market: string,
   env: string = process.env.NODE_ENV
-) => (env === "development" ? localFetch() : remoteFetch(market));
+) =>
+  env === "development" || env === "test" ? localFetch() : remoteFetch(market);
 
 export default fetchData;

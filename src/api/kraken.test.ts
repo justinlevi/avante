@@ -1,4 +1,6 @@
-import { fetchData } from "./kraken";
+import { fetchData, PAIRS } from "./kraken";
+
+import { default as expected } from "./static.json";
 
 describe("API Tests", () => {
   // scenarios and expectation
@@ -7,12 +9,9 @@ describe("API Tests", () => {
     // Arrange
 
     // Act
-    const data = await fetchData("development");
+    const data = await fetchData(PAIRS.ETHUSD, "development");
 
     // Assert
-    const expected = {
-      static: true
-    };
-    expect(data).toMatchObject(expected);
+    expect(data).toMatchObject(expected.result);
   });
 });
