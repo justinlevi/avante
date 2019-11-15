@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from "react";
+
 import { fetchData } from "./api";
 import { PAIRS, Market } from "./api/kraken";
+
+import { DataGrid, BidsOrAsks } from "./components";
 
 import "./css/tailwind.css";
 
@@ -10,8 +13,7 @@ const App = () => {
   useEffect(() => {
     (async () => {
       try {
-        const data = await fetchData(PAIRS.ETHUSD, "development");
-        setData(data);
+        setData(await fetchData(PAIRS.ETHUSD, "development"));
       } catch (error) {
         console.log(error);
       }
@@ -22,11 +24,27 @@ const App = () => {
     return <p>Loading data...</p>;
   }
 
+  const marketKey = Object.keys(data)[0];
+  const market = data[marketKey];
+
   return (
-    <div className="flex mb-4">
-      <div className="w-1/3 bg-gray-400 h-12">column 1</div>
-      <div className="w-1/3 bg-gray-500 h-12">column 2</div>
-      <div className="w-1/3 bg-gray-600 h-12">column 3</div>
+    <div className={"text-gray-200"}>
+      <div className="flex mb-1">
+        <div className="w-full bg-gray-800 h-12 p-2">
+          <p>
+            Order Book{" "}
+            {PAIRS.ETHUSD.substr(0, 3) + "/" + PAIRS.ETHUSD.substr(3)}
+          </p>
+        </div>
+      </div>
+      <div className="flex mb-4">
+        <div className="w-1/2 bg-gray-900 p-2">
+          <DataGrid market={market} bidsOrAsks={BidsOrAsks.BIDS} />
+        </div>
+        <div className="w-1/2 bg-gray-800 p-2">
+          <DataGrid market={market} bidsOrAsks={BidsOrAsks.ASKS} />
+        </div>
+      </div>
     </div>
   );
 };
