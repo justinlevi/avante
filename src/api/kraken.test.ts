@@ -1,6 +1,6 @@
 import { fetchData, PAIRS } from "./kraken";
 
-import { default as expected } from "./static.json";
+// import { default as expected } from "./ethusd.json";
 
 describe("API Tests", () => {
   // scenarios and expectation
@@ -11,7 +11,9 @@ describe("API Tests", () => {
     // Act
     const data = await fetchData(PAIRS.ETHUSD, "development");
 
-    // Assert
-    expect(data).toMatchObject(expected.result);
+    // Assert Sort
+    expect(data["XETHZUSD"].asks[0].price).toBeLessThan(
+      data["XETHZUSD"].asks[data["XETHZUSD"].asks.length - 1].price
+    );
   });
 });

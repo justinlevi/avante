@@ -111,8 +111,12 @@ const localFetch: (pair: string) => Promise<Market> = async (pair: string) => {
   });
 };
 
-const remoteFetch = async (pair: string) => {
-  const { data } = await axios.get(`/0/public/Depth?pair=${pair}`, {
+const remoteFetch = async (pair: string, env: string) => {
+  const url =
+    env === "production"
+      ? `https://api.kraken.com/0/public/Depth?pair=${pair}`
+      : `/0/public/Depth?pair=${pair}`;
+  const { data } = await axios.get(url, {
     headers: { "content-type": "application/json" }
   });
   const sorted = await sortByPrice(data.result);
@@ -126,6 +130,6 @@ export const fetchData = async (
 ) =>
   env === "development" || env === "test"
     ? localFetch(pair)
-    : remoteFetch(pair);
+    : remoteFetch(pair, env);
 
 export default fetchData;
