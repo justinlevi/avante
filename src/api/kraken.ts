@@ -112,9 +112,9 @@ const localFetch: (pair: string) => Promise<Market> = async (pair: string) => {
 };
 
 const remoteFetch = async (pair: string) => {
-  const data = (await axios.get(`/0/public/Depth?pair=${pair}`, {
+  const { data } = await axios.get(`/0/public/Depth?pair=${pair}`, {
     headers: { "content-type": "application/json" }
-  })) as KrakenResult;
+  });
   const sorted = await sortByPrice(data.result);
   const transformed = transformEntryToKeyedObject(sorted);
   return transformed;
