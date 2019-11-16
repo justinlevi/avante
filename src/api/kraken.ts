@@ -37,12 +37,6 @@ type AskBidEntry = {
   price: number;
 };
 
-// type AsksBidsTransformFnType = (
-//   [a0, a1, a2]: (string | number)[],
-//   index: number,
-//   arr: (string | number)[][]
-// ) => AskBidEntry;
-
 const sortFn = (asc: boolean = true) => (
   [a0]: (string | number)[],
   [b0]: (string | number)[]
